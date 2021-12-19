@@ -1,0 +1,22 @@
+import re
+from collections import OrderedDict, namedtuple
+from typing import List, NamedTuple
+
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        word_tokens = re.split(r'\W+', paragraph)
+        count_word = OrderedDict()
+        most_frequent_entry = ('', 0)
+        for word in word_tokens:
+            new_word = word.lower()
+            if new_word and new_word not in banned:
+                if new_word in count_word.keys():
+                    count_word[new_word] += 1
+                else:
+                    count_word[new_word] = 1
+                if count_word[new_word] > most_frequent_entry[1]:
+                        most_frequent_entry = (new_word, count_word[new_word])
+        return most_frequent_entry[0]
+
+yes = Solution()
+print(yes.mostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit.", ["hit"]))
